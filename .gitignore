@@ -1,3 +1,7 @@
+# general
+*~
+*.kdev*
+
 # Compiled Object files
 *.slo
 *.lo
