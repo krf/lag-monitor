@@ -28,6 +28,7 @@ public:
 
 private Q_SLOTS:
     void handlePongReceived(const Pong& pong);
+    void handleUpdateIntervalChanged(int ms);
 
     /**
      * This function should be mainly called when new data points are received

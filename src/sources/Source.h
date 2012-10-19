@@ -62,6 +62,8 @@ public Q_SLOTS:
 Q_SIGNALS:
     void pongReceived(const Pong& pong);
 
+    void updateIntervalChanged(int ms);
+
 protected:
     /**
      * React to update interval changes
