@@ -18,6 +18,7 @@ void Source::setUpdateInterval(int ms)
     if (m_updateInterval == ms)
         return;
 
+    m_updateInterval = ms;
     updateIntervalChangeEvent(ms);
     emit updateIntervalChanged(ms);
 }

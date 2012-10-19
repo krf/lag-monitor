@@ -13,14 +13,6 @@
 
 static const int JUST_NOW_THRESHOLD = 1000; // ms
 
-static QString formattedTime(int ms, int precision = 2)
-{
-    if (ms > 1000)
-        return QObject::tr("%1 secs").arg(QString::number(ms/1000.0, 'f', precision));
-    else
-        return QObject::tr("%1 ms").arg(QString::number(ms));
-}
-
 MonitorWidget::MonitorWidget(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f)
     , m_source(0)
@@ -102,9 +94,9 @@ void MonitorWidget::updateLabel()
         m_label->setText(tr("Last pong: <strong>%1</strong><br/>(with delay of <strong>%2</strong>)<br/>Update interval: <strong>%3</strong>")
             .arg(elapsed < threshold
                 ? tr("&lt; %1s ago (within threshold)").arg(QString::number(threshold/1000))
-                : tr("%1 ago").arg(formattedTime(elapsed, 0)))
-            .arg(formattedTime(pong.delay))
-            .arg(formattedTime(updateInterval, 0)));
+                : tr("%1 ago").arg(Utils::formattedTime(elapsed)))
+            .arg(Utils::formattedTime(pong.delay, 2))
+            .arg(Utils::formattedTime(updateInterval)));
     }
 }
 
