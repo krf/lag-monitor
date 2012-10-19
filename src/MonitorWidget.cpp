@@ -13,10 +13,10 @@
 
 static const int JUST_NOW_THRESHOLD = 1000; // ms
 
-static QString formattedTime(int ms)
+static QString formattedTime(int ms, int precision = 2)
 {
     if (ms > 1000)
-        return QObject::tr("%1 secs").arg(QString::number(ms/1000.0, 'f', 2));
+        return QObject::tr("%1 secs").arg(QString::number(ms/1000.0, 'f', precision));
     else
         return QObject::tr("%1 ms").arg(QString::number(ms));
 }
@@ -25,6 +25,7 @@ MonitorWidget::MonitorWidget(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f)
     , m_source(0)
     , m_fallBackUpdateTimer(new QTimer(this))
+    , m_updateTimer(new QTimer(this))
     , m_label(new QLabel)
     , m_canvasWidget(new CanvasWidget)
 {
@@ -35,8 +36,12 @@ MonitorWidget::MonitorWidget(QWidget* parent, Qt::WindowFlags f)
     vbox->addWidget(m_label);
     vbox->addWidget(m_canvasWidget);
 
-    m_fallBackUpdateTimer->setInterval(5000);
-    connect(m_fallBackUpdateTimer, SIGNAL(timeout()), SLOT(updateLabel()));
+    m_updateTimer->setInterval(1000);
+    connect(m_updateTimer, SIGNAL(timeout()), SLOT(updateLabel()));
+
+    m_fallBackUpdateTimer->setInterval(10000);
+    m_fallBackUpdateTimer->setSingleShot(true);
+    connect(m_fallBackUpdateTimer, SIGNAL(timeout()), m_updateTimer, SLOT(start()));
 
     updateLabel();
 }
@@ -55,6 +60,7 @@ void MonitorWidget::setSource(Source* source)
     m_source = source;
     if (m_source) {
         connect(m_source, SIGNAL(pongReceived(Pong)), SLOT(handlePongReceived(Pong)));
+        m_fallBackUpdateTimer->start();
     }
 
     m_canvasWidget->setSource(source);
@@ -64,6 +70,7 @@ void MonitorWidget::setSource(Source* source)
 void MonitorWidget::handlePongReceived(const Pong& pong)
 {
     m_lastPong = pong;
+
     m_fallBackUpdateTimer->start(); // restart
     updateLabel();
 }
@@ -81,9 +88,9 @@ void MonitorWidget::updateLabel()
     } else {
         const int elapsed = pong.time.elapsed();
         m_label->setText(tr("Last pong received: <strong>%1</strong><br/>(with delay of <strong>%2</strong>)")
-            .arg(elapsed < JUST_NOW_THRESHOLD
-                ? tr("Just now (&lt; %1s)").arg(JUST_NOW_THRESHOLD/1000)
-                : tr("%1 ago").arg(formattedTime(elapsed)))
+            .arg(elapsed < (JUST_NOW_THRESHOLD + source()->updateInterval())
+                ? tr("Within threshold")
+                : tr("%1 ago").arg(formattedTime(elapsed, 0)))
             .arg(formattedTime(pong.delay)));
     }
 }

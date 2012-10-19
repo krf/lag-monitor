@@ -17,7 +17,6 @@ MockSource::MockSource(QObject* parent)
     qsrand(QTime::currentTime().elapsed());
 
     m_updateTimer->setInterval(MAX_TIMEDELTA);
-    m_updateTimer->start();
     connect(m_updateTimer, SIGNAL(timeout()), SLOT(generateValues()));
 }
 
@@ -29,5 +28,21 @@ void MockSource::generateValues()
     const int randomValue = qrand() % (MAX_DELAY - MIN_DELAY) + MIN_DELAY;
     emit pongReceived(Pong(randomValue));
 }
+
+void MockSource::start()
+{
+    m_updateTimer->start();
+}
+
+void MockSource::stop()
+{
+    m_updateTimer->stop();
+}
+
+bool MockSource::isActive() const
+{
+    return m_updateTimer->isActive();
+}
+
 
 #include "MockSource.moc"

@@ -30,6 +30,14 @@ struct Pong
 
 QDebug operator<<(QDebug dbg, const Pong& p);
 
+/**
+ * A source for catching pong events (abstract base class)
+ *
+ * See the subclasses for implementation details
+ *
+ * @note Sources are inactive by default, they need to be started first
+ * @see start()
+ */
 class Source : public QObject
 {
     Q_OBJECT
@@ -38,14 +46,32 @@ public:
     explicit Source(QObject* parent = 0);
     virtual ~Source();
 
-    virtual void setActive(bool active) = 0;
     virtual bool isActive() const = 0;
 
-    void activate() { setActive(true); }
-    void deactivate() { setActive(false); }
+    /// Set the update interval of this source in milliseconds
+    void setUpdateInterval(int ms);
+    /// Update interval in milliseconds
+    int updateInterval() const { return m_updateInterval; }
+
+public Q_SLOTS:
+    /// Set the source as active, async call
+    virtual void start() = 0;
+    /// Set the source as inactive, blocking call
+    virtual void stop() = 0;
 
 Q_SIGNALS:
     void pongReceived(const Pong& pong);
+
+protected:
+    /**
+     * React to update interval changes
+     *
+     * @note Default implementation just restarts the source
+     */
+    virtual void updateIntervalChangeEvent(int ms);
+
+private:
+    int m_updateInterval; // ms
 };
 
 #endif

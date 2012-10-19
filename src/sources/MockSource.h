@@ -12,6 +12,12 @@ class MockSource : public Source
 public:
     MockSource(QObject* parent = 0);
 
+    virtual bool isActive() const;
+
+public Q_SLOTS:
+    virtual void start();
+    virtual void stop();
+
 private Q_SLOTS:
     void generateValues();
 

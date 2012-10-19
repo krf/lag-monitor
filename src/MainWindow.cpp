@@ -17,7 +17,7 @@ MainWindow::MainWindow()
 
     setCentralWidget(monitorWidget);
 
-    source->activate();
+    source->start();
 
     setWindowTitle(tr("Lag monitor"));
 }

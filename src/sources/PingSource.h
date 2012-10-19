@@ -14,8 +14,8 @@ class PingSource : public Source
 
 public:
     PingSource(QObject* parent = 0);
+    virtual ~PingSource();
 
-    virtual void setActive(bool active);
     virtual bool isActive() const;
 
     /**
@@ -29,8 +29,8 @@ public:
     void setOverrideHost(const QString& host);
 
 public Q_SLOTS:
-    void start();
-    void stop();
+    virtual void start();
+    virtual void stop();
 
 private Q_SLOTS:
     void readStdout();
@@ -45,6 +45,7 @@ private:
     QString m_host;
 
     QTimer* m_retryTimer;
+    int m_retryIntervalState;
 };
 
 #endif // PINGSOURCE_H

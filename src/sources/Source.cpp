@@ -4,12 +4,28 @@
 
 Source::Source(QObject* parent)
     : QObject(parent)
+    , m_updateInterval(5000)
 {
 }
 
 Source::~Source()
 {
     debug();
+}
+
+void Source::setUpdateInterval(int ms)
+{
+    if (m_updateInterval == ms)
+        return;
+
+    updateIntervalChangeEvent(ms);
+}
+
+void Source::updateIntervalChangeEvent(int ms)
+{
+    Q_UNUSED(ms);
+    stop();
+    start();
 }
 
 QDebug operator<<(QDebug dbg, const Pong& p)

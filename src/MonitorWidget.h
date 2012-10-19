@@ -42,6 +42,7 @@ private Q_SLOTS:
 private:
     Source* m_source;
     QTimer* m_fallBackUpdateTimer;
+    QTimer* m_updateTimer;
 
     // ui
     QLabel* m_label;
