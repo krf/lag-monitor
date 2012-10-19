@@ -1,6 +1,18 @@
 # general
 *~
 *.kdev*
+*.swp
+*.rej
+*.orig
+*.out
+.*
+CMakeLists.txt.user
+
+# from git merge
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
 
 # Compiled Object files
 *.slo
