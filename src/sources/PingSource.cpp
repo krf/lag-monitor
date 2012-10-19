@@ -48,9 +48,10 @@ QString PingSource::host() const
 
 void PingSource::setOverrideHost(const QString& host)
 {
-    debug() << host;
-    m_host = host;
+    if (m_host == host)
+        return;
 
+    m_host = host;
     if (isActive())
         start();
 }
