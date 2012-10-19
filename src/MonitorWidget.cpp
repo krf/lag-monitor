@@ -104,7 +104,7 @@ void MonitorWidget::updateLabel()
                 ? tr("&lt; %1s ago (within threshold)").arg(QString::number(threshold/1000))
                 : tr("%1 ago").arg(formattedTime(elapsed, 0)))
             .arg(formattedTime(pong.delay))
-            );
+            .arg(formattedTime(updateInterval, 0)));
     }
 }
 
