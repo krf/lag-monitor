@@ -149,7 +149,7 @@ void CanvasWidget::paintForeground(QPainter* painter)
     }
 
     const float xScale = width / (float)m_timeSpan;
-    const float yScale = (height - topMarginY) / (float)maxDelay;
+    const float yScale = (height - topMarginY) / (float)(maxDelay == 0 ? 1 : maxDelay);
 
     QPolygon polygon;
     Q_FOREACH(const Pong& pong, m_history) {

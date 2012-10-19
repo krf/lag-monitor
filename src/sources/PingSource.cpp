@@ -36,7 +36,7 @@ PingSource::~PingSource()
 
 bool PingSource::isActive() const
 {
-    return m_process.state() == QProcess::Running;
+    return m_process.state() == (QProcess::Running || QProcess::Starting);
 }
 
 QString PingSource::host() const
@@ -48,13 +48,17 @@ QString PingSource::host() const
 
 void PingSource::setOverrideHost(const QString& host)
 {
+    debug() << host;
     m_host = host;
+
+    if (isActive())
+        start();
 }
 
 void PingSource::start()
 {
     if (isActive())
-        return;
+        stop();
 
     QStringList args;
     args << "-i" << QString::number(updateInterval()/1000);
@@ -80,14 +84,20 @@ void PingSource::readStdout()
             // ping successfully started, reset the retry interval state to beginning
             m_retryIntervalState = 0;
         }
-        // Message: "64 bytes from 8.8.8.8: icmp_req=1 ttl=50 time=51.2 ms"
         else if (line.contains("bytes from")) {
-            const QString timeEntry = line.section(' ', 6, 6); // "time=N"
+            // Message: "64 bytes from 8.8.8.8: icmp_req=1 ttl=50 time=51.2 ms"
+            QString timeEntry = line.section(' ', 6, 6); // "time=N"
+            if (!timeEntry.contains("time=")) {
+                // we probably got another message format
+                // Message: "64 bytes from localhost (127.0.0.1): icmp_req=3 ttl=64 time=0.070 ms"
+                timeEntry = line.section(' ', 7, 7); // "time=N"
+            }
             const QString timeValue = timeEntry.split('=').last(); // "N"
             bool ok;
             const float rtt = timeValue.toFloat(&ok);
-            if (ok)
+            if (ok) {
                 emit pongReceived(Pong(rtt));
+            }
         }
         debug() << "-stdout-" << line;
     }
@@ -102,6 +112,9 @@ void PingSource::readStderr()
 void PingSource::handleFinished(int errorCode, QProcess::ExitStatus status)
 {
     debug() << errorCode << status;
+    if (errorCode == 0)
+        return;
+
     scheduleRetry();
 }
 

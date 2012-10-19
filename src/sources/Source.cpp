@@ -26,8 +26,10 @@ void Source::setUpdateInterval(int ms)
 void Source::updateIntervalChangeEvent(int ms)
 {
     Q_UNUSED(ms);
-    stop();
-    start();
+    if (isActive()) {
+        stop();
+        start();
+    }
 }
 
 QDebug operator<<(QDebug dbg, const Pong& p)

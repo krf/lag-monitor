@@ -6,20 +6,24 @@
 #include "MockSource.h"
 
 MainWindow::MainWindow()
+    : m_monitorWidget(new MonitorWidget)
+    , m_pingSource(new PingSource(this))
 {
-    Source* source = new PingSource(this);
-
-    MonitorWidget* monitorWidget = new MonitorWidget;
-    monitorWidget->setSource(source);
+    m_monitorWidget->setSource(m_pingSource);
 
     // override time span
-    monitorWidget->canvas()->setTimeSpan(120000);
+    m_monitorWidget->canvas()->setTimeSpan(120000);
 
-    setCentralWidget(monitorWidget);
+    setCentralWidget(m_monitorWidget);
 
-    source->start();
+    m_pingSource->start();
 
     setWindowTitle(tr("Lag monitor"));
+}
+
+void MainWindow::setHost(const QString& host)
+{
+    m_pingSource->setOverrideHost(host);
 }
 
 MainWindow::~MainWindow()
