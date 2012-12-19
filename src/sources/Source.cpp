@@ -32,6 +32,16 @@ void Source::updateIntervalChangeEvent(int ms)
     }
 }
 
+void Source::setOverrideHost(const QString& host)
+{
+    if (m_host == host)
+        return;
+
+    m_host = host;
+    if (isActive())
+        start();
+}
+
 QDebug operator<<(QDebug dbg, const Pong& p)
 {
     return dbg.nospace() << "Pong["

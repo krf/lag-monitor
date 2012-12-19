@@ -7,8 +7,8 @@
 static const int MAX_DELAY = 1000;
 static const int MIN_DELAY = 100;
 
-static const int MIN_TIMEDELTA = 100; // ms
-static const int MAX_TIMEDELTA = 1000; // ms
+static const int MIN_TIMEDELTA = 5000; // ms
+static const int MAX_TIMEDELTA = 10000; // ms
 
 MockSource::MockSource(QObject* parent)
     : Source(parent)

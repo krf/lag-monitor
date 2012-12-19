@@ -41,19 +41,9 @@ bool PingSource::isActive() const
 
 QString PingSource::host() const
 {
-    if (m_host.isEmpty())
+    if (overrideHost().isEmpty())
         return DEFAULT_HOST;
-    return m_host;
-}
-
-void PingSource::setOverrideHost(const QString& host)
-{
-    if (m_host == host)
-        return;
-
-    m_host = host;
-    if (isActive())
-        start();
+    return overrideHost();
 }
 
 void PingSource::start()

@@ -53,6 +53,11 @@ public:
     /// Update interval in milliseconds
     int updateInterval() const { return m_updateInterval; }
 
+    /// Return the host used to overwrite the default one
+    QString overrideHost() const { return m_host; }
+    /// Set the host used to overwrite the default one
+    void setOverrideHost(const QString& host);
+
 public Q_SLOTS:
     /// Set the source as active, async call
     virtual void start() = 0;
@@ -73,6 +78,7 @@ protected:
     virtual void updateIntervalChangeEvent(int ms);
 
 private:
+    QString m_host;
     int m_updateInterval; // ms
 };
 

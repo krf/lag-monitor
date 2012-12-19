@@ -25,9 +25,6 @@ public:
      */
     QString host() const;
 
-    QString overrideHost() const { return m_host; }
-    void setOverrideHost(const QString& host);
-
 public Q_SLOTS:
     virtual void start();
     virtual void stop();
@@ -42,7 +39,6 @@ private Q_SLOTS:
 
 private:
     QProcess m_process;
-    QString m_host;
 
     QTimer* m_retryTimer;
     int m_retryIntervalState;

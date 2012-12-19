@@ -7,23 +7,51 @@
 
 MainWindow::MainWindow()
     : m_monitorWidget(new MonitorWidget)
-    , m_pingSource(new PingSource(this))
+    , m_source(0)
 {
-    m_monitorWidget->setSource(m_pingSource);
-
     // override time span
     m_monitorWidget->canvas()->setTimeSpan(120000);
 
     setCentralWidget(m_monitorWidget);
-
-    m_pingSource->start();
-
     setWindowTitle(tr("Lag monitor"));
 }
 
 void MainWindow::setHost(const QString& host)
 {
-    m_pingSource->setOverrideHost(host);
+    if (!m_source)
+        return;
+
+    m_source->setOverrideHost(host);
+}
+
+void MainWindow::setSource(Source* source)
+{
+    if (m_source == source)
+        return;
+
+    if (m_source) {
+        m_monitorWidget->setSource(0);
+    }
+    m_source = source;
+    if (m_source) {
+        m_monitorWidget->setSource(m_source);
+    }
+}
+
+void MainWindow::startSource()
+{
+    if (!m_source)
+        return;
+
+    m_source->start();
+}
+
+void MainWindow::stopSource()
+{
+    if (!m_source)
+        return;
+
+    m_source->stop();
 }
 
 MainWindow::~MainWindow()
