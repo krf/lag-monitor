@@ -38,8 +38,8 @@ protected:
     virtual void paintEvent(QPaintEvent* e);
 
 private:
-    void paintForeground(QPainter* painter);
-    void paintBackground(QPainter* painter);
+    void paintForeground(QPainter* painter) const;
+    void paintBackground(QPainter* painter) const;
 
     Source* m_source;
 
@@ -48,6 +48,9 @@ private:
     /// FIFO, head -> oldest entry, tail -> newest entry
     QQueue<Pong> m_history;
     int m_timeSpan; // ms
+
+    // cache
+    int m_maxDelay;
 };
 
 #endif // CANVASWIDGET_H
