@@ -71,10 +71,13 @@ void MonitorWidget::handlePongReceived(const Pong& pong)
     updateLabel();
 }
 
-void MonitorWidget::handleUpdateIntervalChanged(int ms)
+void MonitorWidget::handleUpdateIntervalChanged(int updateInterval)
 {
-    const int threshold = (JUST_NOW_THRESHOLD + ms);
+    const int threshold = (JUST_NOW_THRESHOLD + updateInterval);
     m_fallBackUpdateTimer->setInterval(threshold);
+
+    setToolTip(tr("<nobr>Update interval: <strong>%3</strong></nobr>")
+        .arg(Utils::formattedTime(updateInterval)));
 }
 
 void MonitorWidget::updateLabel()
@@ -91,12 +94,11 @@ void MonitorWidget::updateLabel()
         const int elapsed = pong.time.elapsed();
         const int updateInterval = source()->updateInterval();
         const int threshold = (JUST_NOW_THRESHOLD + updateInterval);
-        m_label->setText(tr("Last pong: <strong>%1</strong><br/>(with delay of <strong>%2</strong>)<br/>Update interval: <strong>%3</strong>")
+        m_label->setText(tr("Last pong: <strong>%1</strong><br/>(with delay of <strong>%2</strong>)")
             .arg(elapsed < threshold
                 ? tr("&lt; %1s ago (within threshold)").arg(QString::number(threshold/1000))
                 : tr("%1 ago").arg(Utils::formattedTime(elapsed)))
-            .arg(Utils::formattedTime(pong.delay, 2))
-            .arg(Utils::formattedTime(updateInterval)));
+            .arg(Utils::formattedTime(pong.delay, 2)));
     }
 }
 
