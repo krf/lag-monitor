@@ -13,7 +13,7 @@ MainWindow::MainWindow()
     m_monitorWidget->canvas()->setTimeSpan(120000);
 
     setCentralWidget(m_monitorWidget);
-    setWindowTitle(tr("Lag monitor"));
+    setWindowTitle(tr("Lag Monitor"));
 }
 
 void MainWindow::setHost(const QString& host)
