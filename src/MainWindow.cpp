@@ -7,7 +7,7 @@
 
 MainWindow::MainWindow()
     : m_monitorWidget(new MonitorWidget)
-    , m_source(0)
+    , m_source(nullptr)
 {
     // override time span
     m_monitorWidget->canvas()->setTimeSpan(120000);
@@ -30,7 +30,7 @@ void MainWindow::setSource(Source* source)
         return;
 
     if (m_source) {
-        m_monitorWidget->setSource(0);
+        m_monitorWidget->setSource(nullptr);
     }
     m_source = source;
     if (m_source) {

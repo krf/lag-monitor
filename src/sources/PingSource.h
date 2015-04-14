@@ -13,7 +13,7 @@ class PingSource : public Source
     Q_OBJECT
 
 public:
-    PingSource(QObject* parent = 0);
+    PingSource(QObject* parent = nullptr);
     virtual ~PingSource();
 
     virtual bool isActive() const;

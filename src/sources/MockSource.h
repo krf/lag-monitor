@@ -10,7 +10,7 @@ class MockSource : public Source
     Q_OBJECT
 
 public:
-    MockSource(QObject* parent = 0);
+    MockSource(QObject* parent = nullptr);
 
     virtual bool isActive() const;
 

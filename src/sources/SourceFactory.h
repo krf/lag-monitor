@@ -18,7 +18,7 @@ Source* SourceFactory::createSource(const QString& name)
         return new MockSource;
     else if (name == "ping")
         return new PingSource;
-    return 0;
+    return nullptr;
 }
 
 #endif // SOURCEFACTORY_H

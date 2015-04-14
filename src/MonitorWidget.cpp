@@ -15,7 +15,7 @@ static const int JUST_NOW_THRESHOLD = 1000; // ms
 
 MonitorWidget::MonitorWidget(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f)
-    , m_source(0)
+    , m_source(nullptr)
     , m_fallBackUpdateTimer(new QTimer(this))
     , m_updateTimer(new QTimer(this))
     , m_label(new QLabel)

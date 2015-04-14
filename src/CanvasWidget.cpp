@@ -23,7 +23,7 @@ static bool compare_delay(const Pong& p1, const Pong p2)
 
 CanvasWidget::CanvasWidget(QWidget* parent, Qt::WindowFlags f)
     : QFrame(parent, f)
-    , m_source(0)
+    , m_source(nullptr)
     , m_updateTimer(new QTimer(this))
     , m_timeSpan(60000)
     , m_maxDelay(-1)

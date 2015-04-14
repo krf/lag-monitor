@@ -13,7 +13,7 @@ class CanvasWidget : public QFrame
     Q_OBJECT
 
 public:
-    explicit CanvasWidget(QWidget* parent = 0, Qt::WindowFlags f = 0);
+    explicit CanvasWidget(QWidget* parent = nullptr, Qt::WindowFlags f = nullptr);
 
     void setSource(Source* source);
     Source* source() const { return m_source; }

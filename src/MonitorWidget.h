@@ -15,7 +15,7 @@ class MonitorWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MonitorWidget(QWidget* parent = 0, Qt::WindowFlags f = 0);
+    explicit MonitorWidget(QWidget* parent = nullptr, Qt::WindowFlags f = nullptr);
     virtual ~MonitorWidget();
 
     void setSource(Source* source);

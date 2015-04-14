@@ -43,7 +43,7 @@ class Source : public QObject
     Q_OBJECT
 
 public:
-    explicit Source(QObject* parent = 0);
+    explicit Source(QObject* parent = nullptr);
     virtual ~Source();
 
     virtual bool isActive() const = 0;
