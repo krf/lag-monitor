@@ -16,7 +16,7 @@ public:
     PingSource(QObject* parent = nullptr);
     virtual ~PingSource();
 
-    virtual bool isActive() const;
+    virtual bool isActive() const override;
 
     /**
      * If override host is set, use that one, else use a fallback
@@ -26,8 +26,8 @@ public:
     QString host() const;
 
 public Q_SLOTS:
-    virtual void start();
-    virtual void stop();
+    virtual void start() override;
+    virtual void stop() override;
 
 private Q_SLOTS:
     void readStdout();
