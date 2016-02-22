@@ -44,7 +44,7 @@ class Source : public QObject
 
 public:
     explicit Source(QObject* parent = nullptr);
-    virtual ~Source();
+    ~Source() override;
 
     virtual bool isActive() const = 0;
 

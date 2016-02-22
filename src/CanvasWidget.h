@@ -29,13 +29,13 @@ public:
      */
     void setTimeSpan(int timeSpan);
 
-    virtual QSize minimumSizeHint() const override;
+    QSize minimumSizeHint() const override;
 
 private Q_SLOTS:
     void handlePongReceived(const Pong& pong);
 
 protected:
-    virtual void paintEvent(QPaintEvent* e) override;
+    void paintEvent(QPaintEvent* e) override;
 
 private:
     void paintForeground(QPainter* painter) const;

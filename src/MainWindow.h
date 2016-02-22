@@ -12,7 +12,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
-    virtual ~MainWindow();
+    ~MainWindow() override;
 
     void setHost(const QString& host);
     void setSource(Source* source);

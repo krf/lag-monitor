@@ -12,11 +12,11 @@ class MockSource : public Source
 public:
     MockSource(QObject* parent = nullptr);
 
-    virtual bool isActive() const override;
+    bool isActive() const override;
 
 public Q_SLOTS:
-    virtual void start() override;
-    virtual void stop() override;
+    void start() override;
+    void stop() override;
 
 private Q_SLOTS:
     void generateValues();
