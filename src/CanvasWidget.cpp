@@ -204,4 +204,3 @@ QSize CanvasWidget::minimumSizeHint() const
     return CANVAS_MIN_SIZE;
 }
 
-#include "CanvasWidget.moc"

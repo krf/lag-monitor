@@ -119,4 +119,3 @@ void PingSource::scheduleRetry()
     m_retryIntervalState = qMin(MAX_RETRY_INTERVAL_STATE, m_retryIntervalState+1);
 }
 
-#include "PingSource.moc"

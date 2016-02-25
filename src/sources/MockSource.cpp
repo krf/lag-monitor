@@ -45,4 +45,3 @@ bool MockSource::isActive() const
 }
 
 
-#include "MockSource.moc"

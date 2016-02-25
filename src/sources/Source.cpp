@@ -51,4 +51,3 @@ QDebug operator<<(QDebug dbg, const Pong& p)
     return dbg.space();
 }
 
-#include "Source.moc"

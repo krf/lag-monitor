@@ -102,4 +102,3 @@ void MonitorWidget::updateLabel()
     }
 }
 
-#include "MonitorWidget.moc"

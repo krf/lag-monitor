@@ -57,4 +57,3 @@ void MainWindow::stopSource()
 MainWindow::~MainWindow()
 {}
 
-#include "MainWindow.moc"
