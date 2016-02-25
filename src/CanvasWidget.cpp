@@ -1,7 +1,7 @@
 #include "CanvasWidget.h"
 
 #include "Utils.h"
-#include "Source.h"
+#include "sources/Source.h"
 
 #include <QPainter>
 #include <QPaintEvent>

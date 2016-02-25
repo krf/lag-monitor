@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "Source.h"
+#include "sources/Source.h"
 
 class QLabel;
 class QTimer;

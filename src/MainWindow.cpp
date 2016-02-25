@@ -2,8 +2,8 @@
 
 #include "CanvasWidget.h"
 #include "MonitorWidget.h"
-#include "PingSource.h"
-#include "MockSource.h"
+#include "sources/PingSource.h"
+#include "sources/MockSource.h"
 
 MainWindow::MainWindow()
     : m_monitorWidget(new MonitorWidget)

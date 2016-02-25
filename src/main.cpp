@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include "Utils.h"
-#include "SourceFactory.h"
+#include "sources/SourceFactory.h"
 
 #include <QApplication>
 

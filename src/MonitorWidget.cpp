@@ -1,7 +1,7 @@
 #include "MonitorWidget.h"
 
 #include "CanvasWidget.h"
-#include "Source.h"
+#include "sources/Source.h"
 #include "Utils.h"
 
 #include <QLabel>
