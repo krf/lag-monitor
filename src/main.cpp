@@ -3,7 +3,6 @@
 #include "SourceFactory.h"
 
 #include <QApplication>
-#include <QDebug>
 
 void print_usage()
 {
@@ -63,8 +62,8 @@ int main(int argc, char** argv)
     }
 
     if (!invalidArgument.isEmpty()) {
-        qDebug() << "Invalid option or missing/invalid parameter:" << invalidArgument;
-        qDebug() << "You probably need --help";
+        printf("Invalid option or missing/invalid parameter: %s\n", qPrintable(invalidArgument));
+        printf("You probably need --help\n");
         return 1;
     }
 

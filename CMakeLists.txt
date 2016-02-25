@@ -1,10 +1,19 @@
 project(lag-monitor)
 
-cmake_minimum_required(VERSION 2.6)
-find_package(Qt4 REQUIRED)
+cmake_minimum_required(VERSION 2.8)
 
 include(CheckCXXCompilerFlag)
 include(CheckLibraryExists)
+include(FeatureSummary)
+
+find_package(Qt5Widgets)
+set_package_properties(Qt5Widgets PROPERTIES
+    PURPOSE "Qt5 Gui module"
+    URL "http://qt-project.org/"
+)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)")
 set(LIB_INSTALL_DIR "lib${LIB_SUFFIX}")
@@ -36,3 +45,5 @@ set(
 )
 
 add_subdirectory(src)
+
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)

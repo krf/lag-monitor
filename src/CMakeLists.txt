@@ -18,12 +18,9 @@ set(qtapp_SRCS
     MainWindow.cpp
     main.cpp
 )
-
-qt4_automoc(${qtapp_SRCS})
 add_executable(lag-monitor ${qtapp_SRCS})
 target_link_libraries(lag-monitor
-    ${QT_QTCORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
+    Qt5::Widgets
 )
 
 install(TARGETS lag-monitor ${INSTALL_TARGETS_DEFAULT_ARGS})
