@@ -24,7 +24,7 @@ MonitorWidget::MonitorWidget(QWidget* parent, Qt::WindowFlags f)
     m_label->setMargin(5);
     m_canvasWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
 
-    QVBoxLayout* vbox = new QVBoxLayout(this);
+    auto vbox = new QVBoxLayout(this);
     vbox->addWidget(m_label);
     vbox->addWidget(m_canvasWidget);
 
