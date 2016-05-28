@@ -41,9 +41,16 @@ bool PingSource::isActive() const
 
 QString PingSource::host() const
 {
-    if (overrideHost().isEmpty())
-        return DEFAULT_HOST;
-    return overrideHost();
+    static const auto overrideHostFromEnv = qgetenv("PING_SOURCE_HOST");
+    if (!overrideHostFromEnv.isEmpty()) {
+        return overrideHostFromEnv;
+    }
+
+    if (!overrideHost().isEmpty()) {
+        return overrideHost();
+    }
+
+    return DEFAULT_HOST;
 }
 
 void PingSource::start()
