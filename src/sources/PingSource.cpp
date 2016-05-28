@@ -6,14 +6,18 @@
 #include <QTime>
 #include <QTimer>
 
-static const QString PING_COMMAND("ping");
-static const QString DEFAULT_HOST("8.8.8.8");
+namespace {
 
-static const int RETRY_INTERVALS[] = {
+QString PING_COMMAND() { return QStringLiteral("ping"); }
+QString DEFAULT_HOST() { return QStringLiteral("8.8.8.8"); }
+
+const int RETRY_INTERVALS[] = {
     10, 10, 10, 15, 15, // after 60 secs
     30, 30, 60, 60, 180, 180, // after 600 secs
 }; // seconds
-static const int MAX_RETRY_INTERVAL_STATE = sizeof(RETRY_INTERVALS) / sizeof(int);
+const int MAX_RETRY_INTERVAL_STATE = sizeof(RETRY_INTERVALS) / sizeof(int);
+
+}
 
 PingSource::PingSource(QObject* parent)
     : Source(parent)
@@ -43,14 +47,14 @@ QString PingSource::host() const
 {
     static const auto overrideHostFromEnv = qgetenv("PING_SOURCE_HOST");
     if (!overrideHostFromEnv.isEmpty()) {
-        return overrideHostFromEnv;
+        return QString::fromLatin1(overrideHostFromEnv);
     }
 
     if (!overrideHost().isEmpty()) {
         return overrideHost();
     }
 
-    return DEFAULT_HOST;
+    return DEFAULT_HOST();
 }
 
 void PingSource::start()
@@ -59,11 +63,12 @@ void PingSource::start()
         stop();
 
     QStringList args;
-    args << "-i" << QString::number(updateInterval()/1000);
-    args <<  host();
+    args << QStringLiteral("-i") << QString::number(updateInterval()/1000);
+    args << QStringLiteral("-n"); // numeric
+    args << host();
 
-    debug() << "Starting process:" << qPrintable(PING_COMMAND) << qPrintable(args.join(" "));
-    m_process.start(PING_COMMAND, args);
+    debug() << "Starting process:" << qPrintable(PING_COMMAND()) << qPrintable(args.join(QLatin1Char(' ')));
+    m_process.start(PING_COMMAND(), args);
 }
 
 void PingSource::stop()
@@ -75,7 +80,7 @@ void PingSource::stop()
 void PingSource::readStdout()
 {
     while (!m_process.atEnd()) {
-        const QString line = m_process.readLine().trimmed();
+        const QByteArray line = m_process.readLine().trimmed();
 
         // Message: "PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data."
         if (line.startsWith("PING")) {
@@ -84,13 +89,8 @@ void PingSource::readStdout()
         }
         else if (line.contains("bytes from")) {
             // Message: "64 bytes from 8.8.8.8: icmp_req=1 ttl=50 time=51.2 ms"
-            QString timeEntry = line.section(' ', 6, 6); // "time=N"
-            if (!timeEntry.contains("time=")) {
-                // we probably got another message format
-                // Message: "64 bytes from localhost (127.0.0.1): icmp_req=3 ttl=64 time=0.070 ms"
-                timeEntry = line.section(' ', 7, 7); // "time=N"
-            }
-            const QString timeValue = timeEntry.split('=').last(); // "N"
+            const auto start = line.lastIndexOf('=') + 1;
+            const auto timeValue = line.mid(start, line.size() - start - 3); // cut off " ms"
             bool ok;
             const float rtt = timeValue.toFloat(&ok);
             if (ok) {

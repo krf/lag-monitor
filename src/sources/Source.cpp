@@ -45,7 +45,7 @@ void Source::setOverrideHost(const QString& host)
 QDebug operator<<(QDebug dbg, const Pong& p)
 {
     return dbg.nospace() << "Pong["
-        << "time=" << qPrintable(p.time.toString("hh:mm:ss.zzz"))
+        << "time=" << qPrintable(p.time.toString(QStringLiteral("hh:mm:ss.zzz")))
         << ", delay=" << p.delay
         << "]";
     return dbg.space();

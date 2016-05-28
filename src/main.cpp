@@ -4,6 +4,8 @@
 
 #include <QApplication>
 
+namespace {
+
 void print_usage()
 {
     printf("Usage: lag-monitor [OPTION] [HOST]"
@@ -22,7 +24,9 @@ void print_usage()
     );
 }
 
-static const QStringList VALID_SOURCES = QStringList() << "ping" << "mock";
+const QStringList VALID_SOURCES() { return {QStringLiteral("ping"), QStringLiteral("mock")}; }
+
+}
 
 int main(int argc, char** argv)
 {
@@ -42,18 +46,18 @@ int main(int argc, char** argv)
     it.next(); // skip appname
     while (it.hasNext()) {
         const QString arg = it.next();
-        if (arg == "--help" || arg == "-h") {
+        if (arg == QStringLiteral("--help") || arg == QStringLiteral("-h")) {
             printHelp = true;
             break; // done
-        } else if (arg == "-s" && it.hasNext()) {
+        } else if (arg == QStringLiteral("-s") && it.hasNext()) {
             sourceId = it.next();
 
             // validate parameter
-            if (!VALID_SOURCES.contains(sourceId)) {
+            if (!VALID_SOURCES().contains(sourceId)) {
                 invalidArgument = arg;
                 break; // error
             }
-        } else if (arg == "-h" && it.hasNext()) {
+        } else if (arg == QStringLiteral("-h") && it.hasNext()) {
             host = it.next();
         } else {
             invalidArgument = arg;
@@ -73,7 +77,7 @@ int main(int argc, char** argv)
     }
 
     // proceed
-    app.setWindowIcon(QIcon::fromTheme("view-statistics"));
+    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("view-statistics")));
 
     MainWindow window;
     if (!host.isEmpty())

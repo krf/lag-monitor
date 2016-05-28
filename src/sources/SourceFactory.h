@@ -14,9 +14,9 @@ public:
 
 Source* SourceFactory::createSource(const QString& name)
 {
-    if (name == "mock")
+    if (name == QStringLiteral("mock"))
         return new MockSource;
-    else if (name == "ping")
+    else if (name == QStringLiteral("ping"))
         return new PingSource;
     return nullptr;
 }
