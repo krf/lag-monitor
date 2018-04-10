@@ -2,27 +2,12 @@
 #include "Utils.h"
 #include "sources/SourceFactory.h"
 
+#include "lag-monitor_version.h"
+
+#include <QCommandLineParser>
 #include <QApplication>
 
 namespace {
-
-void print_usage()
-{
-    printf("Usage: lag-monitor [OPTION] [HOST]"
-"\n"
-"Monitors the round-trip time via different mechanisms\n"
-"By default, the monitor tries to measure round-trip times via pings to some configured host."
-"\n"
-"Options:\n"
-"  -h, --help        Display this help\n"
-"\n"
-"  -s SOURCE   Select source, one of ['mock', 'ping']. Defaults to 'ping'\n"
-"  -h HOST     Set target host for pings. Defaults to '8.8.8.8' (Google server)\n"
-"\n"
-"Report bugs to https://github.com/krf/lag-monitor\n"
-"Copyright 2012 Kevin Funk <info@kfunk.org>\n"
-    );
-}
 
 const QStringList VALID_SOURCES() { return {QStringLiteral("ping"), QStringLiteral("mock")}; }
 
@@ -31,59 +16,52 @@ const QStringList VALID_SOURCES() { return {QStringLiteral("ping"), QStringLiter
 int main(int argc, char** argv)
 {
     QApplication app(argc, argv);
+    QCoreApplication::setApplicationName(QStringLiteral("lag-monitor"));
+    QCoreApplication::setApplicationVersion(QStringLiteral(LAG_MONITOR_VERSION_STRING));
 
-    // parse and evaluate argument list
-    const QStringList args = app.arguments();
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::translate("main",
+        "Lag monitor for measuring RTT of ICMP packets\n"
+        "\n"
+        "Monitors the round-trip time via different mechanisms\n"
+        "By default, the monitor tries to measure round-trip times via pings to some configured host.\n"
+        "\n"
+        "Report bugs to https://github.com/krf/lag-monitor\n"
+        "Copyright 2018 Kevin Funk <kfunk@kde.org>"
+    ));
+    parser.addHelpOption();
+    parser.addVersionOption();
 
-    // possible options
-    bool printHelp = false;
-    QString sourceId;
-    QString host;
-    QString invalidArgument; // for error reporting
+    parser.addOption({
+        {QStringLiteral("source")},
+        QCoreApplication::translate("main", "Select source, one of 'mock', 'ping' (defaults to 'ping')"),
+        QStringLiteral("SOURCE"),
+        QStringLiteral("ping")
+    });
+    parser.addOption({
+        {QStringLiteral("host")},
+        QCoreApplication::translate("main", "Set target host for pings (defaults to Google servers)"),
+        QStringLiteral("HOST"),
+        QStringLiteral("8.8.8.8")
+    });
 
-    // evaluate
-    QListIterator<QString> it(args);
-    it.next(); // skip appname
-    while (it.hasNext()) {
-        const QString arg = it.next();
-        if (arg == QStringLiteral("--help") || arg == QStringLiteral("-h")) {
-            printHelp = true;
-            break; // done
-        } else if (arg == QStringLiteral("-s") && it.hasNext()) {
-            sourceId = it.next();
+    parser.process(app);
 
-            // validate parameter
-            if (!VALID_SOURCES().contains(sourceId)) {
-                invalidArgument = arg;
-                break; // error
-            }
-        } else if (arg == QStringLiteral("-h") && it.hasNext()) {
-            host = it.next();
-        } else {
-            invalidArgument = arg;
-            break; // error
-        }
-    }
-
-    if (!invalidArgument.isEmpty()) {
-        printf("Invalid option or missing/invalid parameter: %s\n", qPrintable(invalidArgument));
-        printf("You probably need --help\n");
-        return 1;
-    }
-
-    if (printHelp) {
-        print_usage();
-        return 0;
+    // validate
+    if (parser.isSet(QStringLiteral("source")) && !VALID_SOURCES().contains(parser.value(QStringLiteral("source")))) {
+        parser.showHelp(1);
+        Q_UNREACHABLE();
     }
 
     // proceed
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("view-statistics")));
 
     MainWindow window;
-    if (!host.isEmpty())
-        window.setHost(host);
-    if (!sourceId.isEmpty()) {
-        Source* source = SourceFactory::createSource(sourceId);
+    if (parser.isSet(QStringLiteral("host")))
+        window.setHost(parser.value(QStringLiteral("host")));
+    if (parser.isSet(QStringLiteral("source"))) {
+        Source* source = SourceFactory::createSource(parser.value(QStringLiteral("source")));
+        qWarning() << "SOURCE" << source << parser.value(QStringLiteral("source"));
         Q_ASSERT(source);
         window.setSource(source);
     } else {
