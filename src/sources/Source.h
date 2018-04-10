@@ -15,8 +15,7 @@ struct Pong
         : time(QTime::currentTime()), delay(delay_) {}
 
     /// Create an instance with invalid values
-    Pong()
-        : delay(-1) {}
+    Pong() {}
 
     inline bool isValid() const {
         return time.isValid() && delay != -1;
@@ -25,7 +24,7 @@ struct Pong
     /// time when this event occurred
     QTime time;
     /// delay in milliseconds
-    int delay;
+    int delay = -1;
 };
 
 QDebug operator<<(QDebug dbg, const Pong& p);
@@ -79,7 +78,7 @@ protected:
 
 private:
     QString m_host;
-    int m_updateInterval; // ms
+    int m_updateInterval = 5000; // ms
 };
 
 #endif

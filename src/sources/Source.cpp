@@ -4,7 +4,6 @@
 
 Source::Source(QObject* parent)
     : QObject(parent)
-    , m_updateInterval(5000)
 {
 }
 

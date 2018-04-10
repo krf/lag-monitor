@@ -22,7 +22,6 @@ const int MAX_RETRY_INTERVAL_STATE = sizeof(RETRY_INTERVALS) / sizeof(int);
 PingSource::PingSource(QObject* parent)
     : Source(parent)
     , m_retryTimer(new QTimer(this))
-    , m_retryIntervalState(0)
 {
     connect(&m_process, SIGNAL(readyReadStandardOutput()), SLOT(readStdout()));
     connect(&m_process, SIGNAL(readyReadStandardError()), SLOT(readStderr()));

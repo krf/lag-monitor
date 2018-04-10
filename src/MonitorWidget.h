@@ -34,13 +34,13 @@ private Q_SLOTS:
     void updateLabel();
 
 private:
-    Source* m_source;
-    QTimer* m_fallBackUpdateTimer;
-    QTimer* m_updateTimer;
+    Source* m_source = nullptr;
+    QTimer* m_fallBackUpdateTimer = nullptr;
+    QTimer* m_updateTimer = nullptr;
 
     // ui
-    QLabel* m_label;
-    CanvasWidget* m_canvasWidget;
+    QLabel* m_label = nullptr;
+    CanvasWidget* m_canvasWidget = nullptr;
 
     Pong m_lastPong;
 };

@@ -40,8 +40,8 @@ private Q_SLOTS:
 private:
     QProcess m_process;
 
-    QTimer* m_retryTimer;
-    int m_retryIntervalState;
+    QTimer* m_retryTimer = nullptr;
+    int m_retryIntervalState = 0;
 };
 
 #endif // PINGSOURCE_H

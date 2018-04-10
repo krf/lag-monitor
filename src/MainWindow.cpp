@@ -7,7 +7,6 @@
 
 MainWindow::MainWindow()
     : m_monitorWidget(new MonitorWidget)
-    , m_source(nullptr)
 {
     // override time span
     m_monitorWidget->canvas()->setTimeSpan(120000);

@@ -22,8 +22,8 @@ public Q_SLOTS:
     void stopSource();
 
 private:
-    MonitorWidget* m_monitorWidget;
-    Source* m_source;
+    MonitorWidget* m_monitorWidget = nullptr;
+    Source* m_source = nullptr;
 };
 
 #endif // MAINWINDOW_H

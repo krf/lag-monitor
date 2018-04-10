@@ -41,16 +41,15 @@ private:
     void paintForeground(QPainter* painter) const;
     void paintBackground(QPainter* painter) const;
 
-    Source* m_source;
-
-    QTimer* m_updateTimer;
+    Source* m_source = nullptr;
+    QTimer* m_updateTimer = nullptr;
 
     /// FIFO, head -> oldest entry, tail -> newest entry
     QQueue<Pong> m_history;
-    int m_timeSpan; // ms
+    int m_timeSpan = 60000; // ms
 
     // cache
-    int m_maxDelay;
+    int m_maxDelay = -1;
 };
 
 #endif // CANVASWIDGET_H
