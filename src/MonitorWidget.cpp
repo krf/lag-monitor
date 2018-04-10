@@ -85,9 +85,9 @@ void MonitorWidget::updateLabel()
                 ? tr("OK")
                 : tr("<strong>%1%</strong> ago").arg(Utils::formattedTime(elapsed)))
             .arg(Utils::formattedTime(pong.delay, 2)));
-        m_label->setToolTip(tr("Last pong received %1 ago (threshold is %2 secs), pong was delayed %3")
+        m_label->setToolTip(tr("Last pong received %1 ago (threshold is %2), pong was delayed %3")
             .arg(Utils::formattedTime(elapsed))
-            .arg(threshold)
+            .arg(Utils::formattedTime(threshold))
             .arg(Utils::formattedTime(pong.delay, 2))
         );
     }
