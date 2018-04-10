@@ -9,7 +9,7 @@ set(qtapp_SRCS
     MainWindow.cpp
     main.cpp
 )
-add_executable(lag-monitor ${qtapp_SRCS})
+add_executable(lag-monitor WIN32 ${qtapp_SRCS})
 target_link_libraries(lag-monitor
     Qt5::Widgets
 )
