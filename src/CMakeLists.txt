@@ -1,7 +1,3 @@
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}
-)
-
 set(qtapp_SRCS
     sources/Source.cpp
     sources/PingSource.cpp
