@@ -30,14 +30,7 @@ private Q_SLOTS:
     void handlePongReceived(const Pong& pong);
     void handleUpdateIntervalChanged(int ms);
 
-    /**
-     * This function should be mainly called when new data points are received
-     *
-     * The fallback uptimer triggers this function in case no new data points
-     * arrive for a certain amount of time
-     *
-     * @see handlePongReceived
-     */
+    /// regularly called to update the label
     void updateLabel();
 
 private:
