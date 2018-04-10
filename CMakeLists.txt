@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(lag-monitor LANGUAGES CXX)
+project(lag-monitor LANGUAGES CXX VERSION 0.1.0)
 
 include(CheckCXXCompilerFlag)
 include(CheckLibraryExists)
 include(FeatureSummary)
+
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include(ECMSetupVersion)
 
 find_package(Qt5Widgets)
 set_package_properties(Qt5Widgets PROPERTIES
@@ -41,6 +44,12 @@ set(
   LIBRARY DESTINATION ${LIB_INSTALL_DIR}
   ARCHIVE DESTINATION ${LIB_INSTALL_DIR} COMPONENT Devel
 )
+
+ecm_setup_version(PROJECT
+                  VARIABLE_PREFIX LAG_MONITOR
+                  VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/lag-monitor_version.h"
+)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}) # for generated .h files
 
 add_subdirectory(src)
 
