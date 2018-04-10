@@ -35,7 +35,6 @@ private Q_SLOTS:
 
 private:
     Source* m_source = nullptr;
-    QTimer* m_fallBackUpdateTimer = nullptr;
     QTimer* m_updateTimer = nullptr;
 
     // ui

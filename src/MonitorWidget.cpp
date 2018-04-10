@@ -62,9 +62,6 @@ void MonitorWidget::handlePongReceived(const Pong& pong)
 
 void MonitorWidget::handleUpdateIntervalChanged(int updateInterval)
 {
-    const int threshold = (JUST_NOW_THRESHOLD + updateInterval);
-    m_fallBackUpdateTimer->setInterval(threshold);
-
     setToolTip(tr("<nobr>Update interval: <strong>%3</strong></nobr>")
         .arg(Utils::formattedTime(updateInterval)));
 }
