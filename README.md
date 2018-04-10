@@ -13,6 +13,6 @@ By default, the monitor tries to measure round-trip times via pings to some conf
 
 ## About
 
-Please report bugs to https://github.com/krf/lag-monitor
+Please report bugs to: https://github.com/krf/lag-monitor
 
-Author: Kevin Funk <kfunk@kde.org>
+Author: Kevin Funk (<kfunk@kde.org>)
