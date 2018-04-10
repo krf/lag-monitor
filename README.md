@@ -9,7 +9,7 @@ By default, the monitor tries to measure round-trip times via pings to some conf
 
 ## Screenshot
 
-[Screenshot of Lag-Monitor GUI](/lag-monitor-normal.png?raw=true "Screenshot of Lag-Monitor GUI")
+[Screenshot of Lag-Monitor GUI](/data/lag-monitor-normal.png?raw=true "Screenshot of Lag-Monitor GUI")
 
 ## About
 
