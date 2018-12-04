@@ -80,7 +80,7 @@ void MonitorWidget::updateLabel()
         const int elapsed = pong.time.elapsed();
         const int updateInterval = source()->updateInterval();
         const int threshold = (JUST_NOW_THRESHOLD + updateInterval);
-        m_label->setText(tr("Pong: <strong>%1</strong> | \u0394: <strong>%2</strong>")
+        m_label->setText(tr("Ping: <strong>%1</strong> | \u0394: <strong>%2</strong>")
             .arg(elapsed < threshold
                 ? tr("OK")
                 : tr("<strong>%1%</strong> ago").arg(Utils::formattedTime(elapsed)))
