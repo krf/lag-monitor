@@ -39,7 +39,7 @@ PingSource::~PingSource()
 
 bool PingSource::isActive() const
 {
-    return m_process.state() == (QProcess::Running || QProcess::Starting);
+    return m_process.state() == QProcess::Running || m_process.state() == QProcess::Starting;
 }
 
 QString PingSource::host() const
