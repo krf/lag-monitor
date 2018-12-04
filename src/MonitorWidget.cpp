@@ -83,7 +83,7 @@ void MonitorWidget::updateLabel()
         m_label->setText(tr("Ping: <strong>%1</strong> | \u0394: <strong>%2</strong>")
             .arg(elapsed < threshold
                 ? tr("OK")
-                : tr("<strong>%1%</strong> ago").arg(Utils::formattedTime(elapsed)))
+                : tr("<strong>%1</strong> ago").arg(Utils::formattedTime(elapsed)))
             .arg(Utils::formattedTime(pong.delay, 2)));
         m_label->setToolTip(tr("Last pong received %1 ago (threshold is %2), pong was delayed %3")
             .arg(Utils::formattedTime(elapsed))
