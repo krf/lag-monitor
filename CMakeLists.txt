@@ -15,7 +15,6 @@ set_package_properties(Qt5Widgets PROPERTIES
     URL "http://qt-project.org/"
 )
 
-set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
